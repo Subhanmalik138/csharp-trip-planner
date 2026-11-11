@@ -1,11 +1,13 @@
 namespace TripPlanner;
 
-/// <summary>Entry point — commands land in Cli.cs in the next stage.</summary>
+/// <summary>Entry point. Commands are implemented in Cli.cs.</summary>
 internal static class Program
 {
     private static int Main(string[] args)
     {
-        Console.WriteLine("TripPlanner — scaffold ready. Commands coming next.");
-        return 0;
+        var storePath = Environment.GetEnvironmentVariable("TRIPPLANNER_DATA")
+                        ?? Path.Combine(Directory.GetCurrentDirectory(), "trips.json");
+        var store = new JsonFileStore(storePath);
+        return new Cli(store).Run(args);
     }
 }
